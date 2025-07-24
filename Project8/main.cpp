@@ -40,7 +40,17 @@ TEST(DeviceDriver, ReadFiveTimesException) {
 	EXPECT_THROW(driver.read((long)0xB), std::exception);
 }
 
+TEST(DeviceDriverWrite, ReadBeforeWrite) {
+	NiceMock<FlashMock> mock;
 
+	EXPECT_CALL(mock, read((long)0xB))
+		.Times(1)
+		.WillOnce(Return(0xFF));
+
+	DeviceDriver driver{ &mock };
+
+	driver.write((long)0xB, 7);
+}
 
 TEST(DeviceDriverWrite, ReadBeforeWriteException) {
 	NiceMock<FlashMock> mock;

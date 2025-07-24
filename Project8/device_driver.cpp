@@ -30,7 +30,5 @@ void DeviceDriver::write(long address, int data)
         throw WriteFailException();
     }
 
-
-    // TODO: implement this method
     m_hardware->write(address, (unsigned char)data);
 }
